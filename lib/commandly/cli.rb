@@ -20,18 +20,29 @@ class Commandly::CLI < Thor
 
   desc 'new PATH', 'Create a new project from template'
   option :android, :type => :boolean, :aliases => '-a'
-  option :xcode, :type => :boolean, :aliases => '-x'
+  option :ios, :type => :boolean, :aliases => '-i'
   option :template, :aliases => '-t'
   def new(path)
     path = File.expand_path(path)
     raise Error, set_color("ERROR: #{path} already exists.", :red) if File.exist?(path)
-    say "Creating project at #{path}"
-    say "Creating Android project at #{path}" if options[:android]
 
     generator = Commandly::Generator.new
     generator.destination_root = path
-    generator.invoke_all
 
+    if options[:android]
+      say "Creating Android project at #{path}"
+      generator.invoke(:copy_android_templates)
+    end
+
+    if options[:ios]
+      say "Creating iOS project at #{path}"
+      generator.invoke(:copy_ios_templates)
+    end
+
+    if options[:ios].nil? && options[:android].nil?
+      say "Creating iOS and Android project at #{path}"
+      generator.invoke_all
+    end
     # say options
   end
 end
