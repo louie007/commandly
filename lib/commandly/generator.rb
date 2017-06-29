@@ -9,4 +9,8 @@ class Commandly::Generator < Thor::Group
     File.dirname(__FILE__) + '/../../templates'
   end
 
+  def copy_templates
+    directory "ios", "ios"
+    directory "android", "android"
+  end
 end

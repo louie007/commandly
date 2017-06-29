@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
   spec.description   = <<-EOM
                         Commandly is a command line tool for creating iOS and/or Android project.
-                        It lets you create projects from a local or remote template, simple to use and easy to customize.
+                        It lets you create projects from a local or remote template, it's simple to use and easy to customize.
                         EOM
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.

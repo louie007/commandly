@@ -1,12 +1,15 @@
 # Commandly
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/commandly`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Commandly is a command line tool for creating iOS and/or Android project.
+It lets you create projects from a local or remote template, it's simple to use and easy to customize.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install it yourself as:
+
+    $ gem install commandly
+
+Or add this line to your application's Gemfile:
 
 ```ruby
 gem 'commandly'
@@ -16,9 +19,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install commandly
 
 ## Usage
 
