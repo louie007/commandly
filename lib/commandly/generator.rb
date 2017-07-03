@@ -49,9 +49,11 @@ class Commandly::Generator < Thor::Group
   def find_replace_android_text
     project_name = File.basename(destination_root)
     files = Dir.glob(destination_root + "/android/**/**")
-    files -= Dir.glob(destination_root + "/gradle/wrapper/gradle-wrapper.jar")
+    files -= Dir.glob(destination_root + "/android/**/**/gradle-wrapper.jar")
+    files -= Dir.glob(destination_root + "/android/**/**/*.png")
     files.each do |name|
       next if Dir.exists? name
+      puts name
       text = File.read(name)
       text = text.gsub("Commandly", project_name)
       text = text.gsub("commandly", project_name.downcase)
