@@ -44,7 +44,7 @@ $ commandly new NextProject
 $ commandly new NextProject -i
 
 # Create a new Android project called 'NextProject' from a remote git repository template
-$ commandly new NextProject -a -t https://github.com/louie007/vuebly-templates.git
+$ commandly new NextProject -a -t https://github.com/louie007/commandly-templates.git
 
 # Create a new Android project called 'NextProject' from a local git repository template
 $ commandly new NextProject -a -t file:///Users/vuebly/repos/this-a-template/.git
