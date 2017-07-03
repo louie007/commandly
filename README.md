@@ -22,7 +22,33 @@ And then execute:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+Usage:
+$ commandly new PROJECT_NAME
+```
+```
+Options:
+  -a, [--android], [--no-android]
+  -i, [--ios], [--no-ios]
+  -t, [--templateURL=TEMPLATEURL]
+      [--verbose], [--no-verbose]
+```
+
+## Examples
+
+```
+# Create a new Android & iOS project called 'NextProject' from an embeded template
+$ commandly new NextProject
+
+# Create a new iOS project called 'NextProject' from an embeded template
+$ commandly new NextProject -i
+
+# Create a new Android project called 'NextProject' from a remote git repository template
+$ commandly new NextProject -a -t https://github.com/louie007/vuebly-templates.git
+
+# Create a new Android project called 'NextProject' from a local git repository template
+$ commandly new NextProject -a -t file:///Users/vuebly/repos/this-a-template/.git
+```
 
 ## Development
 
@@ -32,7 +58,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/commandly.
+Bug reports and pull requests are welcome on GitHub at https://github.com/louie007/commandly.
 
 ## License
 

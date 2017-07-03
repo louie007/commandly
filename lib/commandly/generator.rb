@@ -5,12 +5,14 @@ class Commandly::Generator < Thor::Group
   include Thor::Actions
   desc 'Generate a new project filesystem structure'
 
+  attr_accessor :remote # True or false
+
   def self.source_root
     File.dirname(__FILE__) + '/../../templates'
   end
 
   def copy_ios_templates
-    directory "ios", "ios"
+    directory "ios", "ios" unless remote
   end
 
   def find_replace_ios_text
@@ -25,7 +27,9 @@ class Commandly::Generator < Thor::Group
 
   def rename_ios_files
     project_name = File.basename(destination_root)
-    File.rename(destination_root + "/ios/Commandly.xcodeproj", destination_root + "/ios/" + project_name + ".xcodeproj")
+    if Dir.exist? destination_root + "/ios/Commandly.xcodeproj"
+      File.rename(destination_root + "/ios/Commandly.xcodeproj", destination_root + "/ios/" + project_name + ".xcodeproj")
+    end
     if Dir.exist? destination_root + "/ios/Commandly"
       File.rename(destination_root + "/ios/Commandly", destination_root + "/ios/" + project_name)
     end
@@ -40,7 +44,7 @@ class Commandly::Generator < Thor::Group
   end
 
   def copy_android_templates
-    directory "android", "android"
+    directory "android", "android" unless remote
   end
 
   def find_replace_android_text

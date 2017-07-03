@@ -1,4 +1,5 @@
 require 'thor'
+require 'git'
 require_relative 'generator'
 
 class Commandly::CLI < Thor
@@ -21,14 +22,21 @@ class Commandly::CLI < Thor
   desc 'new PROJECT_NAME', 'Create a new project from template'
   option :android, :type => :boolean, :aliases => '-a'
   option :ios, :type => :boolean, :aliases => '-i'
-  option :template, :aliases => '-t'
+  option :templateURL, :aliases => '-t'
   def new(project_name)
     project_path = File.expand_path(project_name)
-    say "Project name #{project_name}"
     raise Error, set_color("ERROR: #{project_path} already exists.", :red) if File.exist?(project_path)
 
-    generator = Commandly::Generator.new
-    generator.destination_root = project_path
+    if options[:templateURL]
+      generator = Commandly::Generator.new
+      generator.remote = true
+      generator.destination_root = project_path
+      say "Git cloning from git repository: #{options[:templateURL]}"
+      Git.clone(options[:templateURL], project_path)
+    else
+      generator = Commandly::Generator.new
+      generator.destination_root = project_path
+    end
 
     if options[:ios]
       say "Creating iOS project at #{project_path}"
@@ -48,7 +56,7 @@ class Commandly::CLI < Thor
       say "Creating iOS and Android project at #{project_path}"
       generator.invoke_all
     end
-    
+
     # say options
   end
 end
