@@ -27,36 +27,43 @@ class Commandly::CLI < Thor
     project_path = File.expand_path(project_name)
     raise Error, set_color("ERROR: #{project_path} already exists.", :red) if File.exist?(project_path)
 
+    generator = Commandly::Generator.new
+    generator.destination_root = project_path
+    remote = false
+
     if options[:templateURL]
-      generator = Commandly::Generator.new
-      generator.remote = true
-      generator.destination_root = project_path
+      remote = true
       say "Git cloning from git repository: #{options[:templateURL]}"
       Git.clone(options[:templateURL], project_path)
-    else
-      generator = Commandly::Generator.new
-      generator.destination_root = project_path
+      # Remove .git directory
+      `rm -rf #{project_path}/.git`
     end
 
     if options[:ios]
       say "Creating iOS project at #{project_path}"
-      generator.invoke(:copy_ios_templates)
+      generator.invoke(:copy_ios_templates) unless remote
       generator.invoke(:find_replace_ios_text)
       generator.invoke(:rename_ios_files)
+      `rm -rf #{project_path}/android` unless options[:android]
     end
 
     if options[:android]
       say "Creating Android project at #{project_path}"
-      generator.invoke(:copy_android_templates)
+      generator.invoke(:copy_android_templates) unless remote
       generator.invoke(:find_replace_android_text)
       generator.invoke(:rename_android_files)
+      `rm -rf #{project_path}/ios` unless options[:ios]
     end
 
     if options[:ios].nil? && options[:android].nil?
       say "Creating iOS and Android project at #{project_path}"
-      generator.invoke_all
+      generator.invoke(:copy_ios_templates) unless remote
+      generator.invoke(:find_replace_ios_text)
+      generator.invoke(:rename_ios_files)
+      generator.invoke(:copy_android_templates) unless remote
+      generator.invoke(:find_replace_android_text)
+      generator.invoke(:rename_android_files)
     end
-
-    # say options
   end
+
 end

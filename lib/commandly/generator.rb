@@ -5,14 +5,12 @@ class Commandly::Generator < Thor::Group
   include Thor::Actions
   desc 'Generate a new project filesystem structure'
 
-  attr_accessor :remote # True or false
-
   def self.source_root
     File.dirname(__FILE__) + '/../../templates'
   end
 
   def copy_ios_templates
-    directory "ios", "ios" unless remote
+    directory "ios", "ios"
   end
 
   def find_replace_ios_text
@@ -44,7 +42,7 @@ class Commandly::Generator < Thor::Group
   end
 
   def copy_android_templates
-    directory "android", "android" unless remote
+    directory "android", "android"
   end
 
   def find_replace_android_text
