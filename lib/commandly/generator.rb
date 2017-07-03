@@ -53,7 +53,6 @@ class Commandly::Generator < Thor::Group
     files -= Dir.glob(destination_root + "/android/**/**/*.png")
     files.each do |name|
       next if Dir.exists? name
-      puts name
       text = File.read(name)
       text = text.gsub("Commandly", project_name)
       text = text.gsub("commandly", project_name.downcase)
